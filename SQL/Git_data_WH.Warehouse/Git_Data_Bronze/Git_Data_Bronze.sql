@@ -1,0 +1,1 @@
+CREATE SCHEMA Git_Data_Bronze;
