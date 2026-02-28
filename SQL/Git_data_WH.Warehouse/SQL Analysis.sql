@@ -122,11 +122,22 @@ ORDER BY order_day ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS YTD_sale
 FROM daily
 ORDER BY order_day;
 
-----------------------------------
+------------------ Daily Order count and their value  ------------
+select cast(OrderDate as date) datee, count(*) ordercount, sum(cast(TotalAmount as Decimal(14,2))) Amount_value 
+from master_view group by cast(OrderDate as date) order by datee
 
+------------------Daily Order count and their value with PaymentMode ------------
 
+select cast(OrderDate as date) datee, count(*) ordercount, sum(cast(TotalAmount as Decimal(14,2))) Amount_value 
+,  string_agg(PaymentMethod,',') PaymentModes
+from master_view group by cast(OrderDate as date) order by datee
 
+-----------------Most used payment modes-----------
 
+select PaymentMethod, count(*) as commanly_used_for_payment , row_number() over(order by count(*) desc) rankk
+from master_view group by PaymentMethod order by  commanly_used_for_payment desc 
+
+-----------------------------------------------Thank You -------------------------------------
 
 
 
